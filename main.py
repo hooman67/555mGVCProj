@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import matplotlib.ticker as plticker
 import radio_test
+import radio_user
 
 
 alternatives = ('Ritz', "Day's Inn", 'Basement')
@@ -84,7 +85,7 @@ def onpick(event):
     elif legline.get_text() == alternatives[2]:
       radio_test.main("Basement")
     else:
-      print str(legline.get_text())
+      radio_user.main(legline.get_text())
    
 fig.canvas.mpl_connect('pick_event', onpick)
 
