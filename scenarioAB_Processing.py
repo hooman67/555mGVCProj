@@ -25,7 +25,8 @@ def get_user_data(xml_name):
         for sf in z.findall('ScoreFunction'):
           t1 = {}
           for score in sf.findall('Score'):
-            t1.update({score.get('domain-element'): score.get('value')})
+	    hsT=str(getBin(score.get('value')))
+            t1.update({score.get('domain-element'): hsT})
           t.update({sf.get('objective'): t1})
       temp.append(t)
       total.append(temp)
@@ -45,7 +46,7 @@ def get_alt_data(xml_name):
         for z in x.findall('AlternativeValue'):
           hsTempVal = getBin(z.get('value'))
           temp_vals[z.get('objective')] = hsTempVal
-          print('hs stredKey: '+ hsTempVal)
+          print('hs stredKey:  '+ str(temp_vals))
 
 
 
@@ -64,7 +65,13 @@ def get_total_values(total, alts):
       for x in total[i][2].iterkeys():
         val = alts[z][x] #so this is like highway, downtown, highspeed, lowspeed
         print val
-        total_score += (float(total[i][2][x][getBin(val)]) * float(total[i][1][x])) #code dies here
+
+        if(getFloat(val) == None):
+          print('get descrteet val: ' + getBin(val))
+        else:
+          print('get continuous val:  ' + getBin(val))
+      
+      total_score += (float(total[i][2][x][getBin(val)]) * float(total[i][1][x])) #code dies here
       tv_temp.append(total_score)
     tv.append(tv_temp)
   return tv
@@ -100,17 +107,17 @@ def getBin(x):
     try:
       out = float(x)
       if(out < float(50)):
-        return 'bin1'
+        return '1'
       if(out < float(100)):
-        return 'bin2'
+        return '2'
       if(out < float(150)):
-        return 'bin3'
+        return '3'
       if(out < float(200)):
-        return 'bin4'
+        return '4'
       if(out < float(250)):
-        return 'bin5'
+        return '5'
       else:
-        return 'bin6'
+        return '6'
 
     except ValueError:
       print("Not a float")
@@ -136,7 +143,7 @@ def get_criteria_scores_one_user_multi_alts(total, alts, user_name):
         tv_temp = []
         for x in total[i][2].iterkeys(): #for score functions on critera
           val = alts[y][x] #so this is like highway, downtown, highspeed, lowspeed
-          total_score = float(total[i][2][x][val]) * float(total[i][1][x])
+          total_score = float(total[i][2][x][getBin(val)]) * float(total[i][1][x])
           tv_temp.append(total_score)
         tv.append(tv_temp)
   #print tv
@@ -147,6 +154,6 @@ def get_single_criteria_scores(total, alts, alt_name, criteria_name):
   for i in range(len(total)):
     #for x in total[i][2].iterkeys(): #for score functions on critera
     val = alts[alt_name][criteria_name] #so this is like highway, downtown, highspeed, lowspeed
-    total_score = float(total[i][2][criteria_name][val]) * float(total[i][1][criteria_name])
+    total_score = float(total[i][2][criteria_name][getBin(val)]) * float(total[i][1][criteria_name])
     tv.append(total_score)
   return tv
