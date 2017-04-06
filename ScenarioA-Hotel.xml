@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><ValueCharts name="Scenario A - Hotel" creator="Emily!" version="2.0" id="58dc1cc7122a5078138bf78e" password="a">
+<ChartStructure>
+	<Objectives>
+		<Objective name="Scenario A - Hotel" type="abstract">
+		<Objective name="Amenities" type="abstract">
+		<Objective name="Pool" type="primitive" color="blue">
+			<Domain type="categorical" ordered="true"/>
+			<Description/></Objective>
+		<Objective name="Internet" type="primitive" color="purple">
+			<Domain type="categorical" ordered="true"/>
+			<Description/>
+		</Objective>
+		</Objective>
+		<Objective name="Other" type="abstract">
+		<Objective name="Location" type="primitive" color="purple">
+			<Domain type="categorical" ordered="true"/>
+			<Description/>
+		</Objective>
+		</Objective>
+		</Objective>
+	</Objectives>
+	<Alternatives>
+		<Alternative name="The Sheraton">
+			<AlternativeValue objective="Pool" value="yes"/>
+			<AlternativeValue objective="Internet" value="highspeed"/>
+			<AlternativeValue objective="Location" value="downtown"/>
+			<Description>Luxury</Description>
+		</Alternative>
+		<Alternative name="Days Inn">
+			<AlternativeValue objective="Pool" value="yes"/>
+			<AlternativeValue objective="Internet" value="lowspeed"/>
+			<AlternativeValue objective="Location" value="highway"/>
+			<Description>Motel</Description>
+		</Alternative>
+		<Alternative name="Grandmas Basement">
+			<AlternativeValue objective="Pool" value="no"/>
+			<AlternativeValue objective="Internet" value="none"/>
+			<AlternativeValue objective="Location" value="highway"/>
+			<Description>Grandma's Basement</Description>
+		</Alternative>
+	</Alternatives>
+
+</ChartStructure>
+
+<Users>
+	<User name="Emily!" color="#F3C300">
+		<Weights>
+			<Weight objective="Pool" value="0.611111111111111"/>
+			<Weight objective="Location" value="0.27777777777777773"/>
+			<Weight objective="Internet" value="0.1111111111111111"/>
+		</Weights>
+		<ScoreFunctions>
+			<ScoreFunction objective="Pool" type="discrete">
+				<Score value="0" domain-element="no"/>
+				<Score value="1" domain-element="yes"/>
+			</ScoreFunction>
+			<ScoreFunction objective="Internet" type="discrete">
+				<Score value="1" domain-element="none"/>
+				<Score value="0" domain-element="lowspeed"/>
+				<Score value="0.5964726200810184" domain-element="highspeed"/>
+			</ScoreFunction>
+			<ScoreFunction objective="Location" type="discrete">
+				<Score value="0" domain-element="downtown"/>
+				<Score value="1" domain-element="highway"/>
+			</ScoreFunction>
+		</ScoreFunctions>
+	</User>
+
+<User name="Ann" color="#875692"><Weights><Weight objective="Internet" value="0.8009673305410004"/><Weight objective="Location" value="0.19903266945899956"/><Weight objective="Pool" value="0"/></Weights><ScoreFunctions><ScoreFunction objective="Pool" type="discrete"><Score value="0" domain-element="no"/><Score value="1" domain-element="yes"/></ScoreFunction><ScoreFunction objective="Internet" type="discrete"><Score value="0" domain-element="none"/><Score value="0.5" domain-element="lowspeed"/><Score value="1" domain-element="highspeed"/></ScoreFunction><ScoreFunction objective="Location" type="discrete"><Score value="0" domain-element="downtown"/><Score value="1" domain-element="highway"/></ScoreFunction></ScoreFunctions></User>
+
+<User name="Bob" color="#F38400"><Weights><Weight objective="Location" value="1"/><Weight objective="Internet" value="0"/><Weight objective="Pool" value="0"/></Weights><ScoreFunctions><ScoreFunction objective="Pool" type="discrete"><Score value="0" domain-element="no"/><Score value="1" domain-element="yes"/></ScoreFunction><ScoreFunction objective="Internet" type="discrete"><Score value="0" domain-element="none"/><Score value="0.5" domain-element="lowspeed"/><Score value="1" domain-element="highspeed"/></ScoreFunction><ScoreFunction objective="Location" type="discrete"><Score value="1" domain-element="downtown"/><Score value="0" domain-element="highway"/></ScoreFunction></ScoreFunctions></User>
+
+<User name="Carol" color="#A1CAF1"><Weights><Weight objective="Location" value="0.40153436501789436"/><Weight objective="Internet" value="0.29752049927985774"/><Weight objective="Pool" value="0.30094513570224785"/></Weights><ScoreFunctions><ScoreFunction objective="Pool" type="discrete"><Score value="0" domain-element="no"/><Score value="1" domain-element="yes"/></ScoreFunction><ScoreFunction objective="Internet" type="discrete"><Score value="0" domain-element="none"/><Score value="0.7040951481571904" domain-element="lowspeed"/><Score value="1" domain-element="highspeed"/></ScoreFunction><ScoreFunction objective="Location" type="discrete"><Score value="0" domain-element="downtown"/><Score value="1" domain-element="highway"/></ScoreFunction></ScoreFunctions></User></Users></ValueCharts>
