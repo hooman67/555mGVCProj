@@ -182,7 +182,7 @@ def main(alts, users, user_data, name_of_user):
 
     for i in range(len(data)): 
         ax.plot(theta, data[i], color=colors[i], alpha=0.25)
-        ax.fill(theta, data[i], facecolor=colors[i], alpha=0.25, label = users[i])
+        ax.fill(theta, data[i], facecolor=colors[i], alpha=0.25, label = alt_names[i])
     '''ax.plot(theta, data[0], color=colors[0], alpha=0.25)
     ax.fill(theta, data[0], facecolor=colors[0], alpha=0.25, label = alt_names[0])
     ax.plot(theta, data[1], color=colors[1])

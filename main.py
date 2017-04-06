@@ -110,7 +110,7 @@ def onpick(event):
 
 fig.canvas.mpl_connect('pick_event', onpick)
 
-vio_test.main(user_data)
+#vio_test.main(user_data)
 
 plt.show()
 
