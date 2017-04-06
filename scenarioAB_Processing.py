@@ -9,6 +9,7 @@ scores = []
 def get_user_data(xml_name):
   tree = ET.parse(xml_name)
   root = tree.getroot()
+
   total = []
   for i in root.findall('Users'):
     for x in i.findall('User'):
@@ -56,7 +57,7 @@ def get_total_values(total, alts):
       for x in total[i][2].iterkeys():
         val = alts[z][x] #so this is like highway, downtown, highspeed, lowspeed
         print val
-        total_score += (float(total[i][2][x][val]) * float(total[i][1][x]))
+        total_score += (float(total[i][2][x][val]) * float(total[i][1][x])) #code dies here
       tv_temp.append(total_score)
     tv.append(tv_temp)
   return tv
@@ -99,7 +100,7 @@ def get_criteria_scores_one_user_multi_alts(total, alts, user_name):
           total_score = float(total[i][2][x][val]) * float(total[i][1][x])
           tv_temp.append(total_score)
         tv.append(tv_temp)
-  print tv
+  #print tv
   return tv
 
 def get_single_criteria_scores(total, alts, alt_name, criteria_name):

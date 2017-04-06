@@ -16,10 +16,13 @@ xml_name = str(sys.argv[1])
 
 #print user_data
 alternatives = scenarioAB_Processing.get_alt_data(xml_name)
+print alternatives
 user_data  = scenarioAB_Processing.get_user_data(xml_name)
+print user_data
 #print alternatives
 
-data = scenarioAB_Processing.get_total_values(user_data, alternatives)
+data = scenarioAB_Processing.get_total_values(user_data, alternatives) #code dies here with continuous values
+print data
 for i in range(len(data)):
     for x in range(len(data[i])):
         #data[i][x] = 100* (round(data[i][x]), 2)
