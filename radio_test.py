@@ -105,6 +105,7 @@ def unit_poly_verts(theta):
 
 
 def example_data(n):
+    #data = 
 
     '''data = [
         ['Language', 'Database', 'Data Format', 'Deploy Target', 'Backend', 'Web Server', 'Learning Curve', 'Adaptability'],
@@ -145,22 +146,24 @@ def example_data(n):
               [0, 0.11, 0.27]
           ])
       ]
+    
     return data
 
 
 
 
-def main(n):
-    N = 3
+def main(picked_data, alts, users, user_data, name_of_alt):
+    data = picked_data
+    spoke_labels = []
+    for i in alts.iterkeys():
+        for a in alts[i].iterkeys():
+            spoke_labels.append(a)
+        break
+    
+    N = len(spoke_labels)
     theta = radar_factory(N, frame='circle')
 
-    data = example_data(n)
-    spoke_labels = data.pop(0)
-    
 
-    '''fig, axes = plt.subplots(figsize=(9, 9), nrows=2, ncols=2,
-                             subplot_kw=dict(projection='radar'))'''
-    
     
     fig = plt.figure(figsize=(9, 9))
     fig.subplots_adjust(wspace=0.25, hspace=0.20, top=0.85, bottom=0.05)
@@ -168,49 +171,35 @@ def main(n):
     colors = ['r', 'g', 'b', 'c', 'w']
     ax = fig.add_subplot(111, projection='radar')
     
-    users = ['Emily', 'Ann', 'Bob', 'Carol']
+    print data
 
-    ax.plot(theta, data[0][1][0], color=colors[0], alpha=0.25)
-    ax.fill(theta, data[0][1][0], facecolor=colors[0], alpha=0.25, label = users[0])
-    ax.plot(theta, data[0][1][1], color=colors[1])
-    ax.fill(theta, data[0][1][1], facecolor=colors[1], alpha=0.25, label = users[1])
-    ax.plot(theta, data[0][1][2], color=colors[2])
-    ax.fill(theta, data[0][1][2], facecolor=colors[2], alpha=0.25, label = users[2])
-    ax.plot(theta, data[0][1][3], color=colors[3])
-    ax.fill(theta, data[0][1][3], facecolor=colors[3], alpha=0.25, label = users[3])
+    for i in range(len(data)):
+        ax.plot(theta, data[i], color=colors[i], alpha=0.25)
+        ax.fill(theta, data[i], facecolor=colors[i], alpha=0.25, label = users[i])
+
+    '''ax.plot(theta, data[0], color=colors[0], alpha=0.25)
+    ax.fill(theta, data[0], facecolor=colors[0], alpha=0.25, label = users[0])
+    ax.plot(theta, data[1], color=colors[1])
+    ax.fill(theta, data[1], facecolor=colors[1], alpha=0.25, label = users[1])
+    ax.plot(theta, data[2], color=colors[2])
+    ax.fill(theta, data[2], facecolor=colors[2], alpha=0.25, label = users[2])
+    ax.plot(theta, data[3], color=colors[3])
+    ax.fill(theta, data[3], facecolor=colors[3], alpha=0.25, label = users[3])'''
 
     ax.set_varlabels(spoke_labels)
+    
+    '''new_spoke = []
+    if 'Auto-industry' in spoke_labels:
+        new_spoke = ['Trip Quality', 'Economic growth','Auto-industry', 'Reach', 'Environment', 'Cost', 'Equity']
+        ax.set_varlabels(new_spoke)'''
+    print spoke_labels
     for label in ax.get_xticklabels():  # make the xtick labels pickable
         label.set_picker(True)
 
     def onpick(event):
         legline = event.artist
-        weights_barchart.draw_bar(str(legline.get_text()))
+        weights_barchart.draw_bar(user_data, alts, str(legline.get_text()), name_of_alt, users)
 
-    # Plot the four cases from the example data on separate axes
-    '''for ax, (title, case_data) in zip(axes.flatten(), data):
-        ax.set_rgrids([0.2, 0.4, 0.6, 0.8])
-        ax.set_title(title, weight='bold', size='medium', position=(0.5, 1.1),
-                     horizontalalignment='center', verticalalignment='center')
-        for d, color in zip(case_data, colors):
-            ax.plot(theta, d, color=color)
-            ax.fill(theta, d, facecolor=color, alpha=0.25)
-        ax.set_varlabels(spoke_labels)'''
-
-
-
-    # add legend relative to top-left plot
-    #####ax = axes[0, 0]
-
-
-
-    '''labels = ('Factor 1', 'Factor 2', 'Factor 3', 'Factor 4', 'Factor 5')
-    legend = ax.legend(labels, loc=(0.9, .95),
-                       labelspacing=0.1, fontsize='small')
-
-    fig.text(0.5, 0.965, '5-Factor Solution Profiles Across Four Scenarios',
-             horizontalalignment='center', color='black', weight='bold',
-             size='large')'''
 
     fig.canvas.mpl_connect('pick_event', onpick)
 

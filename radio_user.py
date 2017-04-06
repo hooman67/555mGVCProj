@@ -7,6 +7,7 @@ from matplotlib.projections.polar import PolarAxes
 from matplotlib.projections import register_projection
 
 import weights_barchart
+import scenarioAB_Processing
 # pylint: disable-msg=C0103
 
 
@@ -156,16 +157,20 @@ def example_data(n):
 
 
 
-def main(n):
-    N = 3
+def main(alts, users, user_data, name_of_user):
+    data = scenarioAB_Processing.get_criteria_scores_one_user_multi_alts(user_data, alts, name_of_user)
+    spoke_labels = []
+    for i in alts.iterkeys():
+        for a in alts[i].iterkeys():
+            spoke_labels.append(a)
+        break
+
+    alt_names = []
+    for i in alts.iterkeys():
+        alt_names.append(i)    
+
+    N = len(spoke_labels)
     theta = radar_factory(N, frame='circle')
-
-    data = example_data(n)
-    spoke_labels = data.pop(0)
-    
-
-    '''fig, axes = plt.subplots(figsize=(9, 9), nrows=2, ncols=2,
-                             subplot_kw=dict(projection='radar'))'''
     
     
     fig = plt.figure(figsize=(9, 9))
@@ -174,14 +179,16 @@ def main(n):
     colors = ['r', 'g', 'b', 'c', 'w']
     ax = fig.add_subplot(111, projection='radar')
     
-    users = ['The Ritz', "Day's Inn", "Grandma's Basement"]
 
-    ax.plot(theta, data[0][1][0], color=colors[0], alpha=0.25)
-    ax.fill(theta, data[0][1][0], facecolor=colors[0], alpha=0.25, label = users[0])
-    ax.plot(theta, data[0][1][1], color=colors[1])
-    ax.fill(theta, data[0][1][1], facecolor=colors[1], alpha=0.25, label = users[1])
-    ax.plot(theta, data[0][1][2], color=colors[2])
-    ax.fill(theta, data[0][1][2], facecolor=colors[2], alpha=0.25, label = users[2])
+    for i in range(len(data)): 
+        ax.plot(theta, data[i], color=colors[i], alpha=0.25)
+        ax.fill(theta, data[i], facecolor=colors[i], alpha=0.25, label = users[i])
+    '''ax.plot(theta, data[0], color=colors[0], alpha=0.25)
+    ax.fill(theta, data[0], facecolor=colors[0], alpha=0.25, label = alt_names[0])
+    ax.plot(theta, data[1], color=colors[1])
+    ax.fill(theta, data[1], facecolor=colors[1], alpha=0.25, label = alt_names[1])
+    ax.plot(theta, data[2], color=colors[2])
+    ax.fill(theta, data[2], facecolor=colors[2], alpha=0.25, label = alt_names[2])'''
 
 
     ax.set_varlabels(spoke_labels)
