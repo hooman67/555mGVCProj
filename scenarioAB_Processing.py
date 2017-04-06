@@ -43,11 +43,10 @@ def get_alt_data(xml_name):
         temp_vals = {}
 
         for z in x.findall('AlternativeValue'):
-          hsTempVal = z.get('value')
-          if(getFloat(hsTempVal) == None):
-            temp_vals[z.get('objective')] = hsTempVal
-          else:
-            temp_vals[z.get('objective')] = getBin(hsTempVal)
+          hsTempVal = getBin(z.get('value'))
+          temp_vals[z.get('objective')] = hsTempVal
+          print('hs stredKey: '+ hsTempVal)
+
 
 
           
@@ -65,11 +64,7 @@ def get_total_values(total, alts):
       for x in total[i][2].iterkeys():
         val = alts[z][x] #so this is like highway, downtown, highspeed, lowspeed
         print val
-        if(getFloat(val) == None):
-          total_score += (float(total[i][2][x][val]) * float(total[i][1][x])) #code dies here
-        else:
-          print('hs GotHere')
-          total_score += (float(total[i][2][x][getBin(val)]) * float(total[i][1][x])) #code dies here
+        total_score += (float(total[i][2][x][getBin(val)]) * float(total[i][1][x])) #code dies here
       tv_temp.append(total_score)
     tv.append(tv_temp)
   return tv
@@ -98,29 +93,28 @@ def getFloat(x):
   except ValueError:
     return out
 
-def getY(x1,y1,x2,y2,x3):
-  if((x2-x1)==0):
-    return None
-
-  m = y2-y1/(x2-x1)
-  b = y2 - m*x2;
-  return (m*x3 + b);
-
 def getBin(x):
-  try:
-    out = float(x)
-    if(out < float(10)):
-      return 'bin1'
-    if(out < float(20)):
-      return 'bin2'
-    if(out < float(30)):
-      return 'bin2'
-    else:
-      return 'bin3'
-
-  except ValueError:
-    print("Not a float")
+  if(getFloat(x) == None):
     return x
+  else:
+    try:
+      out = float(x)
+      if(out < float(50)):
+        return 'bin1'
+      if(out < float(100)):
+        return 'bin2'
+      if(out < float(150)):
+        return 'bin3'
+      if(out < float(200)):
+        return 'bin4'
+      if(out < float(250)):
+        return 'bin5'
+      else:
+        return 'bin6'
+
+    except ValueError:
+      print("Not a float")
+      return x
 
 def get_criteria_scores(total, alts, alt_name):
   tv = []
@@ -128,11 +122,8 @@ def get_criteria_scores(total, alts, alt_name):
     tv_temp = []
     for x in total[i][2].iterkeys(): #for score functions on critera
       val = alts[alt_name][x] #so this is like highway, downtown, highspeed, lowspeed
-      if(getFloat(val) == None):
-        total_score = float(total[i][2][x][val]) * float(total[i][1][x])
-      else:
-        print('hs GotHere')
-        total_score = float(total[i][2][x][getBin(val)]) * float(total[i][1][x])
+
+      total_score = float(total[i][2][x][getBin(val)]) * float(total[i][1][x])
       tv_temp.append(total_score)
     tv.append(tv_temp)
   return tv
